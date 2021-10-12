@@ -13,6 +13,8 @@ class CoinMarketCap {
     /*
         Method: GET 
         Endpoint: /v1/cryptocurrency/listings/latest
+
+        Latest Crypto listings: https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyListingsLatest
     */
     async get_latest_listings() {
         try {
