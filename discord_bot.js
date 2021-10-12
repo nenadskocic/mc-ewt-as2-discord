@@ -24,14 +24,13 @@ client.on("messageCreate", async message => {
         async function top() {
             try {
                 op1 = parseFloat(command[1]);
-                const data = await cmc.get_latest_listings();
-
+                const listings = await cmc.get_latest_listings();
                 let x = JSON.stringify(op1);
                 // Temp array for sliced data
                 let arr = [];
                 let topList = [];
                 // Slices data at the user provided value
-                arr = data.data.slice(0, x);
+                arr = listings.data.slice(0, x);
 
                 for (i = 0; i < arr.length; i++) {
                     // Adds the name of the Cryptocurreny an its respective rank to a new array
@@ -45,6 +44,26 @@ client.on("messageCreate", async message => {
         }  
         top();      
     }
+
+    if(command[0] == "price") {
+        async function price() {
+            try {
+                op1 = command[1].toUpperCase();
+                const quotes = await cmc.get_latest_listings();
+
+                for (i = 0; i < quotes.data.length; i++) {
+                    if(quotes.data[i].symbol == op1) {
+                        await message.reply(`${quotes.data[i].quote.USD.price.toFixed(3)} USD`);
+                    } 
+                }                
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        price();
+    }
+
+    
 });
 
 // Discord BOT Token
