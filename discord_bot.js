@@ -86,10 +86,10 @@ client.on("messageCreate", async message => {
                     }
                 }
 
-                if(this.score1 > this.score2) {
+                if(score1 > score2) {
                     await message.reply(`${symbol1} has a score of ${score1}, while ${symbol2} has a score of ${score2}. ${symbol1} is a healthier project.`);
                 } else {
-                    await message.reply(`${symbol2} has a score of ${score2}, while ${symbol1} has a score of ${score1}. ${symbol2} is a healthier project.`);
+                    await message.reply(`${symbol1} has a score of ${score1}, while ${symbol2} has a score of ${score2}. ${symbol2} is a healthier project.`);
                 }
             } catch (error) {
                 console.log(error);
@@ -97,6 +97,43 @@ client.on("messageCreate", async message => {
         }
         score();
     } 
+
+    if(command[0] == "metric") {
+        async function metric() {
+            try {
+                op1 = command[1].toUpperCase();
+                op2 = command[2].toUpperCase();
+                const metrics = await cmc.get_latest_quotes();
+
+                let perc_change1 = 0.0;
+                let symbol1 = "";
+                let perc_change2 = 0.0;
+                let symbol2 = "";
+                
+                for (i in metrics.data) {
+                    if(metrics.data[i].symbol == op1) {
+                        perc_change1 = `${metrics.data[i].quote.USD.percent_change_7d.toFixed(2)}`;
+                        symbol1 = op1;
+                    }
+                    if(metrics.data[i].symbol == op2) {
+                        perc_change2 = `${metrics.data[i].quote.USD.percent_change_7d.toFixed(2)}`;
+                        symbol2 = op2;
+                    }
+                }
+                if(perc_change1 > perc_change2) {
+                    await message.reply(`${symbol1} moved ${perc_change1}% in 7 days, beating ${symbol2} (${perc_change2}%). ${symbol1} is trending`);
+                } else {
+                    await message.reply(`${symbol1} moved ${perc_change1}% in 7 days, losing to ${symbol2} (${perc_change2}%). ${symbol2} is trending`)
+                }
+              
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        metric();
+    }
+
+
 });
 
 // Discord BOT Token
