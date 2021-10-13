@@ -51,6 +51,33 @@ class CoinMarketCap {
             console.error(error);
         }
     }
+    /*
+        Method: GET 
+        Endpoint: /v1/cryptocurrency/quotes/latest
+
+        Latest quotes: https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyQuotesLatest
+
+        Manually requested only the recent top 5 (minus USDT - stablecoin)
+
+    */
+    async get_latest_quotes() {
+        try {
+            const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
+                params: {
+                    symbol: "BTC,ETH,BNB,ADA,XRP"
+                },
+                headers: {
+                    'X-CMC_PRO_API_KEY' : 'e05d2063-30ff-48f4-8303-27fa191262e0'
+                },
+                json: true,
+                gzip: true
+            })
+            return response.data;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
 
 // Exports modules for methods to be used in discord_bot.js
