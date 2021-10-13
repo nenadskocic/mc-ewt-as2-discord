@@ -63,7 +63,40 @@ client.on("messageCreate", async message => {
         price();
     }
 
-    
+    if(command[0] == "score") {
+        async function score() {
+            try {
+                op1 = command[1].toUpperCase();
+                op2 = command[2].toUpperCase();
+                const fcas = await cmc.get_latest_FCAS();
+
+                let score1 = 0;
+                let symbol1 = "";
+                let score2 = 0;
+                let symbol2 = "";
+
+                for(i = 0; i < fcas.data.length; i++) {
+                    if(fcas.data[i].symbol == op1) {
+                        score1 = `${fcas.data[i].score}`;
+                        symbol1 = op1;
+                    }
+                    if(fcas.data[i].symbol == op2) {
+                        score2 = `${fcas.data[i].score}`;
+                        symbol2 = op2;
+                    }
+                }
+
+                if(this.score1 > this.score2) {
+                    await message.reply(`${symbol1} has a score of ${score1}, while ${symbol2} has a score of ${score2}. ${symbol1} is a healthier project.`);
+                } else {
+                    await message.reply(`${symbol2} has a score of ${score2}, while ${symbol1} has a score of ${score1}. ${symbol2} is a healthier project.`);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        score();
+    } 
 });
 
 // Discord BOT Token
