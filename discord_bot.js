@@ -1,6 +1,8 @@
 /*
     "StAuth10222: I Nenad Skocic, 000107650 certify that this material is my original work. No other person's work has been used 
     without due acknowledgement. I have not made my work available to anyone else."
+
+    Please see command.txt for instructions.
 */
 
 const CoinMarketCap = require("./coinmarketcap.js");
@@ -19,12 +21,17 @@ client.on("ready", function() {
 
 client.on("messageCreate", async message => {
     command = message.content.toLowerCase().split(" ");
-    
+
+    /*
+        Command: top
+        Purpose: Grab the top X cryptocurrencies based on rank (cmc_rank) 
+        Arguments: 1
+    */
     if(command[0] == "top") {
         async function top() {
             try {
                 op1 = parseFloat(command[1]);
-                const listings = await cmc.get_latest_listings();
+                const listings = await cmc.get_latest_listings();           
                 let x = JSON.stringify(op1);
                 // Temp array for sliced data
                 let arr = [];
@@ -45,6 +52,12 @@ client.on("messageCreate", async message => {
         top();      
     }
 
+    
+    /*
+        Command: price
+        Purpose: Grab's the price of the cryptocurrency inputted
+        Arguments: 1
+    */
     if(command[0] == "price") {
         async function price() {
             try {
@@ -53,6 +66,7 @@ client.on("messageCreate", async message => {
 
                 for (i = 0; i < quotes.data.length; i++) {
                     if(quotes.data[i].symbol == op1) {
+                        // BOT responds back to use with USD price of the cryptocurrency to 3 decimal spots.
                         await message.reply(`${quotes.data[i].quote.USD.price.toFixed(3)} USD`);
                     } 
                 }                
@@ -62,7 +76,11 @@ client.on("messageCreate", async message => {
         }
         price();
     }
-
+    /*
+        Command: score
+        Purpose: Compares two cryptocurrencies inputted based on their FCAS score and determines which project is potentially a better investment opportunity.
+        Arguments: 2
+    */
     if(command[0] == "score") {
         async function score() {
             try {
@@ -98,6 +116,11 @@ client.on("messageCreate", async message => {
         score();
     } 
 
+    /*
+        Command: metric
+        Purpose: Compares two cryptocurrencies inputted based on the percentage change that has occured in the last 7 days to determine trends.
+        Arguments: 2
+    */
     if(command[0] == "metric") {
         async function metric() {
             try {
@@ -125,14 +148,18 @@ client.on("messageCreate", async message => {
                 } else {
                     await message.reply(`${symbol1} moved ${perc_change1}% in 7 days, losing to ${symbol2} (${perc_change2}%). ${symbol2} is trending`)
                 }
-              
+                
             } catch (error) {
                 console.log(error);
             }
         }
         metric();
     }
-
+    /*
+        Command: exchange
+        Purpose: Determines if the inputted FIAT current can be found on the specific exchange.
+        Arguments: 2
+    */
     if(command[0] == "exchange") {
         async function exchange() {
             try {
@@ -162,9 +189,7 @@ client.on("messageCreate", async message => {
         }
         exchange();
     }
-
-
 });
 
 // Discord BOT Token
-client.login("ODk2ODQ1NjE1NzE0MTY0NzM3.YWNCkQ.oV2KzjRDrLtjLU7CWMNckTVua6s");
+client.login("ODk2ODQ1NjE1NzE0MTY0NzM3.YWNCkQ.S6F8xumGWCWW5Mhx53fLTY7A5vQ");
