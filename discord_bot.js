@@ -133,6 +133,36 @@ client.on("messageCreate", async message => {
         metric();
     }
 
+    if(command[0] == "exchange") {
+        async function exchange() {
+            try {
+                op1 = command[1].toLowerCase();
+                op2 = command[2].toUpperCase();
+
+                const exchange = await cmc.get_exchange_data();
+
+                let slug = "";
+                let arr = [];
+                
+                for(i in exchange.data) {
+                    if(exchange.data[i].slug == op1) {
+                        slug = `${exchange.data[i].slug}`;
+                        arr += `${exchange.data[i].fiats}`;
+                    } 
+                }    
+                
+                if(arr.includes(op2)) {
+                    await message.reply(`${slug} exchange contains FIAT currency: ${op2}`);
+                } else {
+                    await message.reply(`${slug} exchange DOES NOT contain FIAT currency: ${op2}`);
+                }                        
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        exchange();
+    }
+
 
 });
 
