@@ -1,0 +1,46 @@
+/*
+    "StAuth10222: I Nenad Skocic, 000107650 certify that this material is my original work. No other person's work has been used 
+    without due acknowledgement. I have not made my work available to anyone else."
+*/
+
+cryptoBOT: Purpose of this bot is to pull data from the CoinMarketCap api and fetch the data and analyze for prices, trends, etc for the available endpoints.
+
+COMMAND: top
+PURPOSE: Grab the top X cryptocurrencies based on rank (cmc_rank)
+ARGUMENTS: Numeric value
+EXAMPLE: top 2
+RETURNS: 
+1. Binance
+2. Ethereum
+
+COMMAND: price
+PURPOSE: Grab the price of the cryptocurrency inputted
+ARGUMENTS: String value
+EXAMPLE: price ADA
+RETURNS: 
+1. 2.176 USD
+
+COMMAND: score
+PURPOSE: Compares two cryptocurrencies inputted based on their FCAS score and determines which project is potentially a better investment opportunity.
+ARGUMENTS: 2 string values
+EXAMPLE: score BTC ETH
+RETURNS: 
+"BTC has a score of 881, while ETH has a score of 969. ETH is a healthier project."
+
+COMMAND: metric
+PURPOSE: Compares two cryptocurrencies inputted based on the percentage change that has occured in the last 7 days to determine trends.
+ARGUMENTS: 2 string values
+EXAMPLE: metric XRP ADA
+RETURNS: 
+"XRP moved 7.33% in 7 days, beating ADA (0.51%). XRP is trending"
+
+COMMAND: exchange
+PURPOSE: Determines if the inputted FIAT current can be found on the specific exchange.
+ARGUMENTS: 2 string values
+EXAMPLE: exchange binance USD
+RETURNS: 
+"binance exchange contains FIAT currency: USD"
+
+
+
+
